@@ -1,0 +1,85 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50" [ngClass]="{'block': showForm, 'hidden': !showForm}">
+  <div class="relative w-full max-w-3xl mx-auto bg-white rounded-lg shadow-lg">
+    <div class="flex items-start justify-between p-4 border-b border-gray-200 rounded-t">
+      <h5 class="text-xl font-medium text-gray-800" id="estudianteModalLabel">Datos del Estudiante</h5>
+      <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" (click)="closeModal()">
+        <i class="icon ph-bold ph-x"></i>
+      </button>
+    </div>
+    <div class="p-6 space-y-6">
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class="mb-4">
+          <label for="txtName" class="block text-sm font-medium text-gray-700">NOMBRE:</label>
+          <input formControlName="name" type="text" id="txtName" name="txtName" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            [ngClass]="{'border-green-500': userForm.get('name')?.valid && userForm.get('name')?.touched, 'border-red-500': userForm.get('name')?.invalid && userForm.get('name')?.touched}">
+          <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched" class="mt-1 text-sm text-red-500">Campo obligatorio y debe contener solo letras</div>
+        </div>
+
+        <div class="mb-4">
+          <label for="txtLastnamePaternal" class="block text-sm font-medium text-gray-700">APELLIDO PATERNO:</label>
+          <input formControlName="lastname_paternal" type="text" id="txtLastnamePaternal" name="txtLastnamePaternal" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            [ngClass]="{'border-green-500': userForm.get('lastname_paternal')?.valid && userForm.get('lastname_paternal')?.touched, 'border-red-500': userForm.get('lastname_paternal')?.invalid && userForm.get('lastname_paternal')?.touched}">
+          <div *ngIf="userForm.get('lastname_paternal')?.invalid && userForm.get('lastname_paternal')?.touched" class="mt-1 text-sm text-red-500">Campo obligatorio y debe contener solo letras</div>
+        </div>
+
+        <div class="mb-4">
+          <label for="txtLastnameMaternal" class="block text-sm font-medium text-gray-700">APELLIDO MATERNO:</label>
+          <input formControlName="lastname_maternal" type="text" id="txtLastnameMaternal" name="txtLastnameMaternal" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            [ngClass]="{'border-green-500': userForm.get('lastname_maternal')?.valid && userForm.get('lastname_maternal')?.touched, 'border-red-500': userForm.get('lastname_maternal')?.invalid && userForm.get('lastname_maternal')?.touched}">
+          <div *ngIf="userForm.get('lastname_maternal')?.invalid && userForm.get('lastname_maternal')?.touched" class="mt-1 text-sm text-red-500">Campo obligatorio y debe contener solo letras</div>
+        </div>
+
+        <div class="mb-4">
+          <label for="txtBirthdate" class="block text-sm font-medium text-gray-700">FECHA DE NACIMIENTO:</label>
+          <input formControlName="birthdate" type="date" id="txtBirthdate" name="txtBirthdate" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            [ngClass]="{'border-green-500': userForm.get('birthdate')?.valid && userForm.get('birthdate')?.touched, 'border-red-500': userForm.get('birthdate')?.invalid && userForm.get('birthdate')?.touched}">
+          <div *ngIf="userForm.get('birthdate')?.invalid && userForm.get('birthdate')?.touched" class="mt-1 text-sm text-red-500">Campo obligatorio</div>
+        </div>
+
+        <div class="mb-4">
+          <label for="txtDocumentType" class="block text-sm font-medium text-gray-700">TIPO DE DOCUMENTO:</label>
+          <select formControlName="document_type" id="txtDocumentType" name="txtDocumentType" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            [ngClass]="{'border-green-500': userForm.get('document_type')?.valid && userForm.get('document_type')?.touched, 'border-red-500': userForm.get('document_type')?.invalid && userForm.get('document_type')?.touched}">
+            <option value="" disabled selected>Elegir documento</option>
+            <option value="DNI">DNI</option>
+            <option value="CNE">CNE</option>
+          </select>
+          <div *ngIf="userForm.get('document_type')?.invalid && userForm.get('document_type')?.touched" class="mt-1 text-sm text-red-500">Campo obligatorio</div>
+        </div>
+
+        <div class="mb-4">
+          <label for="txtDocumentNumber" class="block text-sm font-medium text-gray-700">NÚMERO DE DOCUMENTO:</label>
+          <input formControlName="documentNumber" type="text" id="txtDocumentNumber" name="txtDocumentNumber" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            [ngClass]="{'border-green-500': userForm.get('documentNumber')?.valid && userForm.get('documentNumber')?.touched, 'border-red-500': userForm.get('documentNumber')?.invalid && userForm.get('documentNumber')?.touched}">
+          <div *ngIf="userForm.get('documentNumber')?.invalid && userForm.get('documentNumber')?.touched" class="mt-1 text-sm text-red-500">Campo obligatorio</div>
+        </div>
+
+        <div class="mb-4">
+          <label for="txtEmail" class="block text-sm font-medium text-gray-700">CORREO ELECTRÓNICO:</label>
+          <input formControlName="email" type="email" id="txtEmail" name="txtEmail" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            [ngClass]="{'border-green-500': userForm.get('email')?.valid && userForm.get('email')?.touched, 'border-red-500': userForm.get('email')?.invalid && userForm.get('email')?.touched}">
+          <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="mt-1 text-sm text-red-500">Campo obligatorio y debe ser un correo válido</div>
+        </div>
+
+        <div class="mb-4">
+          <label for="txtPhone" class="block text-sm font-medium text-gray-700">CELULAR:</label>
+          <input formControlName="phone" type="text" id="txtPhone" name="txtPhone" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            [ngClass]="{'border-green-500': userForm.get('phone')?.valid && userForm.get('phone')?.touched, 'border-red-500': userForm.get('phone')?.invalid && userForm.get('phone')?.touched}">
+          <div *ngIf="userForm.get('phone')?.invalid && userForm.get('phone')?.touched" class="mt-1 text-sm text-red-500">Campo obligatorio y debe ser un número válido</div>
+        </div>
+
+        <div class="mb-4">
+          <label for="txtPhoneOptional" class="block text-sm font-medium text-gray-700">CELULAR OPCIONAL:</label>
+          <input formControlName="phone_optional" type="text" id="txtPhoneOptional" name="txtPhoneOptional" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            [ngClass]="{'border-green-500': userForm.get('phone_optional')?.valid && userForm.get('phone_optional')?.touched, 'border-red-500': userForm.get('phone_optional')?.invalid && userForm.get('phone_optional')?.touched}">
+          <div *ngIf="userForm.get('phone_optional')?.invalid && userForm.get('phone_optional')?.touched" class="mt-1 text-sm text-red-500">Debe ser un número válido</div>
+        </div>
+
+        <div class="flex items-center justify-end space-x-4">
+          <button type="submit" class="btn btn-primary mt-4 bg-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600 focus:outline-none focus:bg-blue-600" [disabled]="userForm.invalid">Agregar Usuario</button>
+          <button type="button" class="btn btn-secondary mt-4 bg-gray-500 text-white rounded-md py-2 px-4 hover:bg-gray-600 focus:outline-none focus:bg-gray-600" (click)="closeModal()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

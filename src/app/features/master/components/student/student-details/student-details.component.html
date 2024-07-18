@@ -1,0 +1,84 @@
+<div class="bg-white shadow-md rounded-lg p-6 max-w-2xl mx-auto relative">
+    <button 
+      type="button" 
+      class="absolute top-4 right-4 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-2xl p-1.5 ml-auto flex items-center justify-center" 
+      (click)="closeDetails()">
+      <i class="icon ph-bold ph-x"></i>
+    </button>
+    <div class="flex flex-col items-center mb-4">
+      <img
+        class="w-24 h-24 rounded-full object-cover mb-4"
+        src="https://github.com/GabrielGutierrezQuispe.png" 
+        alt="Foto de perfil"
+      >
+      <h2 class="text-xl font-bold text-center">{{ student.names }} {{ student.lastNamePaternal }} {{ student.lastNameMaternal }}</h2>
+      <p class="text-gray-600">{{ student.occupation }}</p>
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <p class="font-semibold text-gray-700">Tipo de Documento:</p>
+        <p class="text-gray-600">{{ student.documentType }}</p>
+      </div>
+      <div>
+        <p class="font-semibold text-gray-700">Número de Documento:</p>
+        <p class="text-gray-600">{{ student.documentNumber }}</p>
+      </div>
+      <div>
+        <p class="font-semibold text-gray-700">Sexo:</p>
+        <p class="text-gray-600">{{ student.sex }}</p>
+      </div>
+      <div>
+        <p class="font-semibold text-gray-700">Fecha de Nacimiento:</p>
+        <p class="text-gray-600">{{ student.birthDate | date: 'dd-MMM-yyyy' }}</p>
+      </div>
+      <div>
+        <p class="font-semibold text-gray-700">País de Nacimiento:</p>
+        <p class="text-gray-600">{{ student.birthCountry }}</p>
+      </div>
+      <div>
+        <p class="font-semibold text-gray-700">Ubicación de Nacimiento:</p>
+        <p class="text-gray-600">{{ student.ubigeoBirth.department }}, {{ student.ubigeoBirth.province }}, {{ student.ubigeoBirth.district }}</p>
+      </div>
+      <div>
+        <p class="font-semibold text-gray-700">Ubicación de Actual:</p>
+        <p class="text-gray-600">{{ student.ubigeoResidence.department }}, {{ student.ubigeoResidence.province }}, {{ student.ubigeoResidence.district }}</p>
+      </div>
+      <div>
+        <p class="font-semibold text-gray-700">Correo:</p>
+        <p class="text-gray-600">{{ student.email }}</p>
+      </div>
+      <div>
+        <p class="font-semibold text-gray-700">Teléfono:</p>
+        <p class="text-gray-600">{{ student.phoneNumber }}</p>
+      </div>
+      <div>
+        <p class="font-semibold text-gray-700">Estado Civil:</p>
+        <p class="text-gray-600">{{ student.maritalStatus }}</p>
+      </div>
+      <div>
+        <p class="font-semibold text-gray-700">Nivel Educativo:</p>
+        <p class="text-gray-600">{{ student.educationLevel }}</p>
+      </div>
+      <div>
+        <p class="font-semibold text-gray-700">Discapacidad:</p>
+        <p class="text-gray-600">{{ student.disability }}</p>
+      </div>
+      <div>
+        <p class="font-semibold text-gray-700">Tipo de Discapacidad:</p>
+        <p class="text-gray-600">{{ student.disabilityType }}</p>
+      </div>
+      <div>
+        <p class="font-semibold text-gray-700">Acceso a Internet:</p>
+        <p class="text-gray-600">{{ student.internetAccess }}</p>
+      </div>
+      <div>
+        <p class="font-semibold text-gray-700">Empleo:</p>
+        <p class="text-gray-600">{{ student.employed }}</p>
+      </div>
+      <div>
+        <p class="font-semibold text-gray-700">Idioma Natal:</p>
+        <p class="text-gray-600">{{ student.nativeLanguage }}</p>
+      </div>
+    </div>
+  </div>
+  

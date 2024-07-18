@@ -1,0 +1,18 @@
+@import "~ngx-toastr/toastr";
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import "primeng/resources/themes/tailwind-light/theme.css";
+@import "primeng/resources/primeng.css";
+
+.p-checkbox-box {
+  @apply bg-white border border-gray-400;
+}
+
+.p-checkbox-box.p-highlight {
+  @apply bg-blue-500 border border-blue-500;
+}
+
+.p-multiselect-header {
+  @apply bg-gray-200;
+}

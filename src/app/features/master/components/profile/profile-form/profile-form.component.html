@@ -1,0 +1,97 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+    <div class="relative w-full max-w-3xl mx-auto bg-white rounded-lg shadow-lg">
+        <div class="flex items-start justify-between p-4 border-b border-gray-200 rounded-t">
+            <h5 class="text-xl font-medium text-gray-800">Datos del Cetpro</h5>
+            <button type="button" (click)="onCloseForm()"
+                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M10 9l-4.293-4.293a1 1 0 011.414-1.414L10 6.586l4.293-4.293a1 1 0 111.414 1.414L11.414 9l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 9z"
+                        clip-rule="evenodd"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="p-6 space-y-6">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="mb-3">
+                        <label class="block text-sm font-medium text-gray-700">
+                            Nombre*</label>
+                        <div class="flex">
+                            <input formControlName="name" type="text" required
+                                [ngClass]="{'border-red-500': isFieldInvalid('name'), 'border-green-500': isFieldValid('name')}"
+                                class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none
+                                focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+
+                        <div *ngIf="isFieldInvalid('name')" class="text-red-500 text-sm mt-1">
+                            <div *ngIf="form.get('name')?.errors?.['required']">Ingrese un nombre.</div>
+                            <div *ngIf="form.get('name')?.errors?.['minlength']">Nombre debe tener al menos 3
+                                caracteres.</div>
+                            <div *ngIf="form.get('name')?.errors?.['pattern']">Nombre debe contener solo letras
+                                mayúsculas.</div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="block text-sm font-medium text-gray-700">Tipo de
+                            Gestión</label>
+                        <select formControlName="managementType" required
+                            [ngClass]="{'border-red-500': isFieldInvalid('managementType'), 'border-green-500': isFieldValid('managementType')}"
+                            class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none
+                            focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <option value="Público">Público</option>
+                            <option value="Privado">Privado</option>
+                            <option value="Convenio">Convenio</option>
+                        </select>
+
+                        <div *ngIf="isFieldInvalid('managementType')" class="text-red-500 text-sm mt-1">
+                            <div *ngIf="form.get('managementType')?.errors?.['required']">Seleccione un tipo de Gestión.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="block text-sm font-medium text-gray-700">
+                            Código Modular*</label>
+                        <div class="flex">
+                            <input formControlName="modularCode" type="text" required
+                                [ngClass]="{'border-red-500': isFieldInvalid('modularCode'), 'border-green-500': isFieldValid('modularCode')}"
+                                class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none
+                                focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+
+                        <div *ngIf="isFieldInvalid('modularCode')" class="text-red-500 text-sm mt-1">
+                            <div *ngIf="form.get('modularCode')?.errors?.['required']">Ingrese un Código Modular.</div>
+                            <div *ngIf="form.get('modularCode')?.errors?.['minlength']">Código Modular debe tener 7
+                                dígitos.
+                            </div>
+                            <div *ngIf="form.get('modularCode')?.errors?.['maxlenght']">Código Modular debe tener 7
+                                dígitos.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="block text-sm font-medium text-gray-700">
+                            DRE/GRE*</label>
+                        <div class="flex">
+                            <input formControlName="dreGre" type="text" required
+                                [ngClass]="{'border-red-500': isFieldInvalid('dreGre'), 'border-green-500': isFieldValid('dreGre')}"
+                                class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none
+                                focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                        <div *ngIf="isFieldInvalid('dreGre')" class="text-red-500 text-sm mt-1">
+                            <div *ngIf="form.get('dreGre')?.errors?.['required']">Ingrese un DRE ó GRE.</div>
+                            <div *ngIf="form.get('dreGre')?.errors?.['pattern']">DRE/GRE solo contiene letras.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-center mt-2">
+                    <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,402 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50"
+  [ngClass]="{'block': showForm, 'hidden': !showForm}">
+  <div class="relative w-full max-w-3xl mx-auto bg-white rounded-lg shadow-lg">
+    <div class="flex items-start justify-between p-4 border-b border-gray-200 rounded-t">
+      <h5 class="text-xl font-medium text-gray-800" id="estudianteModalLabel">Datos del Estudiante</h5>
+      <button type="button"
+        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+        (click)="closeModal()">
+        <i class="icon ph-bold ph-x"></i>
+      </button>
+    </div>
+    <div class="p-6 space-y-6">
+      <form [formGroup]="studentForm" (ngSubmit)="onSubmit()" novalidate>
+        <input type="hidden" id="accion" name="accion">
+        <input type="hidden" class="form-control" id="frmId">
+
+        <!-- First Part -->
+        <div *ngIf="currentStep === 1">
+          <!-- Tipo de Documento y Número de Documento -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="mb-3">
+              <label for="documentType" class="block text-sm font-medium text-gray-700">Tipo de Documento*</label>
+              <select
+                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                id="documentType" formControlName="documentType" required [ngClass]="{
+              'border-red-500': studentForm.controls['documentType'].invalid && (studentForm.controls['documentType'].dirty || studentForm.controls['documentType'].touched),
+              'border-green-500': studentForm.controls['documentType'].valid && (studentForm.controls['documentType'].dirty || studentForm.controls['documentType'].touched)
+            }">
+                <option value="" selected>Selecciona tipo documento</option>
+                <option value="DNI">DNI</option>
+                <option value="CNE">CNE</option>
+              </select>
+              <div
+                *ngIf="studentForm.controls['documentType'].invalid && (studentForm.controls['documentType'].dirty || studentForm.controls['documentType'].touched)"
+                class="text-red-500 text-sm mt-1">
+                Seleccione un tipo de documento.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="documentNumber" class="block text-sm font-medium text-gray-700">N° Documento*</label>
+              <div class="flex">
+                <input type="text"
+                  class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  id="documentNumber" formControlName="documentNumber" required [ngClass]="{
+                  'border-red-500': studentForm.controls['documentNumber'].invalid && (studentForm.controls['documentNumber'].dirty || studentForm.controls['documentNumber'].touched),
+                  'border-green-500': studentForm.controls['documentNumber'].valid && (studentForm.controls['documentNumber'].dirty || studentForm.controls['documentNumber'].touched)
+                }" (keypress)="validateNumber($event)" (input)="dataDNI()">
+              </div>
+              <div
+                *ngIf="studentForm.controls['documentNumber'].invalid && (studentForm.controls['documentNumber'].dirty || studentForm.controls['documentNumber'].touched)"
+                class="text-red-500 text-sm mt-1">
+                Ingrese un número de documento válido.
+              </div>
+            </div>
+          </div>
+
+          <!-- Apellido Paterno -->
+          <div class="mb-3">
+            <label for="lastNamePaternal" class="block text-sm font-medium text-gray-700">Apellido Paterno*</label>
+            <input type="text"
+              class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              id="lastNamePaternal" formControlName="lastNamePaternal" required [ngClass]="{
+              'border-red-500': studentForm.controls['lastNamePaternal'].invalid && (studentForm.controls['lastNamePaternal'].dirty || studentForm.controls['lastNamePaternal'].touched),
+              'border-green-500': studentForm.controls['lastNamePaternal'].valid && (studentForm.controls['lastNamePaternal'].dirty || studentForm.controls['lastNamePaternal'].touched)
+            }" (keypress)="validateLetters($event)">
+            <div
+              *ngIf="studentForm.controls['lastNamePaternal'].invalid && (studentForm.controls['lastNamePaternal'].dirty || studentForm.controls['lastNamePaternal'].touched)"
+              class="text-red-500 text-sm mt-1">
+              Ingrese un apellido paterno válido.
+            </div>
+          </div>
+
+          <!-- Apellido Materno -->
+          <div class="mb-3">
+            <label for="lastNameMaternal" class="block text-sm font-medium text-gray-700">Apellido Materno*</label>
+            <input type="text"
+              class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              id="lastNameMaternal" formControlName="lastNameMaternal" required [ngClass]="{
+              'border-red-500': studentForm.controls['lastNameMaternal'].invalid && (studentForm.controls['lastNameMaternal'].dirty || studentForm.controls['lastNameMaternal'].touched),
+              'border-green-500': studentForm.controls['lastNameMaternal'].valid && (studentForm.controls['lastNameMaternal'].dirty || studentForm.controls['lastNameMaternal'].touched)
+            }" (keypress)="validateLetters($event)">
+            <div
+              *ngIf="studentForm.controls['lastNameMaternal'].invalid && (studentForm.controls['lastNameMaternal'].dirty || studentForm.controls['lastNameMaternal'].touched)"
+              class="text-red-500 text-sm mt-1">
+              Ingrese un apellido materno válido.
+            </div>
+          </div>
+
+          <!-- Nombres -->
+          <div class="mb-3">
+            <label for="names" class="block text-sm font-medium text-gray-700">Nombres*</label>
+            <input type="text"
+              class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              id="names" formControlName="names" required [ngClass]="{
+              'border-red-500': studentForm.controls['names'].invalid && (studentForm.controls['names'].dirty || studentForm.controls['names'].touched),
+              'border-green-500': studentForm.controls['names'].valid && (studentForm.controls['names'].dirty || studentForm.controls['names'].touched)
+            }" (keypress)="validateLetters($event)">
+            <div
+              *ngIf="studentForm.controls['names'].invalid && (studentForm.controls['names'].dirty || studentForm.controls['names'].touched)"
+              class="text-red-500 text-sm mt-1">
+              Ingrese un nombre válido.
+            </div>
+          </div>
+
+          <!-- Sexo y Fecha de Nacimiento -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="mb-3">
+              <label for="sex" class="block text-sm font-medium text-gray-700">Sexo*</label>
+              <select
+                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                id="sex" formControlName="sex" required [ngClass]="{
+              'border-red-500': studentForm.controls['sex'].invalid && (studentForm.controls['sex'].dirty || studentForm.controls['sex'].touched),
+              'border-green-500': studentForm.controls['sex'].valid && (studentForm.controls['sex'].dirty || studentForm.controls['sex'].touched)
+            }">
+                <option value="" selected>Selecciona sexo</option>
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+              </select>
+              <div
+                *ngIf="studentForm.controls['sex'].invalid && (studentForm.controls['sex'].dirty || studentForm.controls['sex'].touched)"
+                class="text-red-500 text-sm mt-1">
+                Seleccione un sexo.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="birthDate" class="block text-sm font-medium text-gray-700">Fecha de Nacimiento*</label>
+              <input type="date"
+                class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                id="birthDate" formControlName="birthDate" required [ngClass]="{
+                'border-red-500': studentForm.controls['birthDate'].invalid && (studentForm.controls['birthDate'].dirty || studentForm.controls['birthDate'].touched),
+                'border-green-500': studentForm.controls['birthDate'].valid && (studentForm.controls['birthDate'].dirty || studentForm.controls['birthDate'].touched)
+              }">
+              <div
+                *ngIf="studentForm.controls['birthDate'].invalid && (studentForm.controls['birthDate'].dirty || studentForm.controls['birthDate'].touched)"
+                class="text-red-500 text-sm mt-1">
+                Seleccione una fecha de nacimiento.
+              </div>
+            </div>
+          </div>
+
+          <!-- Next Button -->
+          <div class="flex justify-end">
+            <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              (click)="nextStep()">Siguiente</button>
+          </div>
+        </div>
+
+        <!-- Second Part -->
+        <div *ngIf="currentStep === 2">
+          <!-- País de Nacimiento y Ubigeo de Nacimiento -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="mb-3">
+              <label for="birthCountry" class="block text-sm font-medium text-gray-700">País de Nacimiento*</label>
+              <select
+                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                id="birthCountry" formControlName="birthCountry" required>
+                <option value="" selected>Selecciona país</option>
+                <option value="Peru" selected>Peru</option>
+                <option value="Chile" selected>Chile</option>
+                <option value="Venezuela" selected>Venezuela</option>
+              </select>
+              <!-- <select class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="birthCountry" formControlName="birthCountry" required>
+                <option value="" selected>Selecciona país</option>
+                <option *ngFor="let country of countries" [value]="country.country_name">{{ country.country_name }}</option>
+              </select> -->
+
+              <div
+                *ngIf="studentForm.controls['birthCountry'].invalid && (studentForm.controls['birthCountry'].dirty || studentForm.controls['birthCountry'].touched)"
+                class="text-red-500 text-sm mt-1">
+                Seleccione un país válido.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="ubigeoBirth" class="block text-sm font-medium text-gray-700">Ubigeo de Nacimiento*</label>
+              <select
+                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                id="ubigeoBirth" formControlName="ubigeoBirth" required
+                [ngClass]="{
+                  'border-red-500': studentForm.controls['ubigeoBirth'].invalid && (studentForm.controls['ubigeoBirth'].dirty || studentForm.controls['ubigeoBirth'].touched),
+                  'border-green-500': studentForm.controls['ubigeoBirth'].valid && (studentForm.controls['ubigeoBirth'].dirty || studentForm.controls['ubigeoBirth'].touched)
+                }">
+                <option value="" selected>Selecciona Ubigeo*</option>
+                <option *ngFor="let ubigeo of ubigeos" [ngValue]="ubigeo">{{ ubigeo.province }}</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Ubigeo de Residencia y Correo -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="mb-3">
+              <label for="ubigeoResidence" class="block text-sm font-medium text-gray-700">Ubigeo de Residencia*</label>
+              <select
+                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                id="ubigeoResidence" formControlName="ubigeoResidence" required
+                [ngClass]="{
+                  'border-red-500': studentForm.controls['ubigeoResidence'].invalid && (studentForm.controls['ubigeoResidence'].dirty || studentForm.controls['ubigeoResidence'].touched),
+                  'border-green-500': studentForm.controls['ubigeoResidence'].valid && (studentForm.controls['ubigeoResidence'].dirty || studentForm.controls['ubigeoResidence'].touched)
+                }">
+                <option value="" selected>Selecciona Ubigeo*</option>
+                <option *ngFor="let ubigeo of ubigeos" [ngValue]="ubigeo.id">{{ ubigeo.province }}</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="block text-sm font-medium text-gray-700">Correo*</label>
+              <input type="email"
+                class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                id="email" formControlName="email" required [ngClass]="{
+      'border-red-500': studentForm.controls['email'].invalid && (studentForm.controls['email'].dirty || studentForm.controls['email'].touched),
+      'border-green-500': studentForm.controls['email'].valid && (studentForm.controls['email'].dirty || studentForm.controls['email'].touched)
+    }">
+              <div
+                *ngIf="studentForm.controls['email'].invalid && (studentForm.controls['email'].dirty || studentForm.controls['email'].touched)"
+                class="text-red-500 text-sm mt-1">
+                Ingrese un correo válido.
+              </div>
+            </div>
+          </div>
+
+          <!-- Teléfono y Estado Civil -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="mb-3">
+              <label for="phoneNumber" class="block text-sm font-medium text-gray-700">Teléfono*</label>
+              <input type="text"
+                class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                id="phoneNumber" formControlName="phoneNumber" required [ngClass]="{
+      'border-red-500': studentForm.controls['phoneNumber'].invalid && (studentForm.controls['phoneNumber'].dirty || studentForm.controls['phoneNumber'].touched),
+      'border-green-500': studentForm.controls['phoneNumber'].valid && (studentForm.controls['phoneNumber'].dirty || studentForm.controls['phoneNumber'].touched)
+    }" (keypress)="validatePhoneNumber($event)">
+              <div
+                *ngIf="studentForm.controls['phoneNumber'].invalid && (studentForm.controls['phoneNumber'].dirty || studentForm.controls['phoneNumber'].touched)"
+                class="text-red-500 text-sm mt-1">
+                Ingrese un teléfono válido.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="maritalStatus" class="block text-sm font-medium text-gray-700">Estado Civil*</label>
+              <select
+                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                id="maritalStatus" formControlName="maritalStatus" required [ngClass]="{
+      'border-red-500': studentForm.controls['maritalStatus'].invalid && (studentForm.controls['maritalStatus'].dirty || studentForm.controls['maritalStatus'].touched),
+      'border-green-500': studentForm.controls['maritalStatus'].valid && (studentForm.controls['maritalStatus'].dirty || studentForm.controls['maritalStatus'].touched)
+    }">
+                <option value="" selected>Selecciona estado civil</option>
+                <option value="soltero">Soltero</option>
+                <option value="casado">Casado</option>
+                <option value="divorciado">Divorciado</option>
+              </select>
+              <div
+                *ngIf="studentForm.controls['maritalStatus'].invalid && (studentForm.controls['maritalStatus'].dirty || studentForm.controls['maritalStatus'].touched)"
+                class="text-red-500 text-sm mt-1">
+                Seleccione su estado civil válido.
+              </div>
+            </div>
+          </div>
+
+          <!-- Nivel de Educación y Discapacidad -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="mb-3">
+              <label for="educationLevel" class="block text-sm font-medium text-gray-700">Nivel de Educación*</label>
+              <input type="text"
+                class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                id="educationLevel" formControlName="educationLevel" required [ngClass]="{
+      'border-red-500': studentForm.controls['educationLevel'].invalid && (studentForm.controls['educationLevel'].dirty || studentForm.controls['educationLevel'].touched),
+      'border-green-500': studentForm.controls['educationLevel'].valid && (studentForm.controls['educationLevel'].dirty || studentForm.controls['educationLevel'].touched)
+    }">
+              <div
+                *ngIf="studentForm.controls['educationLevel'].invalid && (studentForm.controls['educationLevel'].dirty || studentForm.controls['educationLevel'].touched)"
+                class="text-red-500 text-sm mt-1">
+                Ingrese su nivel de educación actual.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="disability" class="block text-sm font-medium text-gray-700">¿Tiene Discapacidad?*</label>
+              <select
+                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                id="disability" formControlName="disability" required [ngClass]="{
+      'border-red-500': studentForm.controls['disability'].invalid && (studentForm.controls['disability'].dirty || studentForm.controls['disability'].touched),
+      'border-green-500': studentForm.controls['disability'].valid && (studentForm.controls['disability'].dirty || studentForm.controls['disability'].touched)
+    }">
+                <option value="" selected>Selecciona una opción</option>
+                <option value="si">Sí</option>
+                <option value="no">No</option>
+              </select>
+              <div
+                *ngIf="studentForm.controls['disability'].invalid && (studentForm.controls['disability'].dirty || studentForm.controls['disability'].touched)"
+                class="text-red-500 text-sm mt-1">
+                Seleccione un campo válido.
+              </div>
+            </div>
+          </div>
+
+          <!-- Tipo de Discapacidad y Acceso a Internet -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="mb-3">
+              <label for="disabilityType" class="block text-sm font-medium text-gray-700">
+                Tipo de Discapacidad
+              </label>
+              <select
+                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                id="disabilityType"
+                formControlName="disabilityType"
+                required
+                [ngClass]="{
+                  'border-red-500': studentForm.controls['disabilityType'].invalid && (studentForm.controls['disabilityType'].dirty || studentForm.controls['disabilityType'].touched),
+                  'border-green-500': studentForm.controls['disabilityType'].valid && (studentForm.controls['disabilityType'].dirty || studentForm.controls['disabilityType'].touched)
+                }"
+              >
+                <option value="" selected>Selecciona una opción</option>
+                <option *ngFor="let type of disabilityTypes" [value]="type">{{ type }}</option>
+              </select>
+              <div
+                *ngIf="studentForm.controls['disabilityType'].invalid && (studentForm.controls['disabilityType'].dirty || studentForm.controls['disabilityType'].touched)"
+                class="text-red-500 text-sm mt-1"
+              >
+                Ingrese un campo válido.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="internetAccess" class="block text-sm font-medium text-gray-700">¿Tiene acceso a
+                Internet?*</label>
+              <select
+                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                id="internetAccess" formControlName="internetAccess" required [ngClass]="{
+      'border-red-500': studentForm.controls['internetAccess'].invalid && (studentForm.controls['internetAccess'].dirty || studentForm.controls['internetAccess'].touched),
+      'border-green-500': studentForm.controls['internetAccess'].valid && (studentForm.controls['internetAccess'].dirty || studentForm.controls['internetAccess'].touched)
+    }">
+                <option value="" selected>Selecciona una opción</option>
+                <option value="si">Sí</option>
+                <option value="no">No</option>
+              </select>
+              <div
+                *ngIf="studentForm.controls['internetAccess'].invalid && (studentForm.controls['internetAccess'].dirty || studentForm.controls['internetAccess'].touched)"
+                class="text-red-500 text-sm mt-1">
+                Seleccione un campo válido.
+              </div>
+            </div>
+          </div>
+
+          <!-- Empleo y Ocupación -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="mb-3">
+              <label for="employed" class="block text-sm font-medium text-gray-700">¿Está Empleado?*</label>
+              <select
+                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                id="employed" formControlName="employed" required [ngClass]="{
+      'border-red-500': studentForm.controls['employed'].invalid && (studentForm.controls['employed'].dirty || studentForm.controls['employed'].touched),
+      'border-green-500': studentForm.controls['employed'].valid && (studentForm.controls['employed'].dirty || studentForm.controls['employed'].touched)
+    }">
+                <option value="" selected>Selecciona una opción</option>
+                <option value="si">Sí</option>
+                <option value="no">No</option>
+              </select>
+              <div
+                *ngIf="studentForm.controls['employed'].invalid && (studentForm.controls['employed'].dirty || studentForm.controls['employed'].touched)"
+                class="text-red-500 text-sm mt-1">
+                Seleccione un campo válido.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="occupation" class="block text-sm font-medium text-gray-700">Ocupación</label>
+              <input type="text"
+                class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                id="occupation" formControlName="occupation" [ngClass]="{
+      'border-red-500': studentForm.controls['occupation'].invalid && (studentForm.controls['occupation'].dirty || studentForm.controls['occupation'].touched),
+      'border-green-500': studentForm.controls['occupation'].valid && (studentForm.controls['occupation'].dirty || studentForm.controls['occupation'].touched)
+    }" [disabled]="studentForm.get('employed')?.value === 'no'">
+              <div
+                *ngIf="studentForm.controls['occupation'].invalid && (studentForm.controls['occupation'].dirty || studentForm.controls['occupation'].touched)"
+                class="text-red-500 text-sm mt-1">
+                Ingrese un campo válido.
+              </div>
+            </div>
+          </div>
+
+          <!-- Lengua Materna -->
+          <div class="mb-3">
+            <label for="nativeLanguage" class="block text-sm font-medium text-gray-700">Lengua Materna*</label>
+            <input type="text"
+              class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              id="nativeLanguage" formControlName="nativeLanguage" required [ngClass]="{
+    'border-red-500': studentForm.controls['nativeLanguage'].invalid && (studentForm.controls['nativeLanguage'].dirty || studentForm.controls['nativeLanguage'].touched),
+    'border-green-500': studentForm.controls['nativeLanguage'].valid && (studentForm.controls['nativeLanguage'].dirty || studentForm.controls['nativeLanguage'].touched)
+  }">
+            <div
+              *ngIf="studentForm.controls['nativeLanguage'].invalid && (studentForm.controls['nativeLanguage'].dirty || studentForm.controls['nativeLanguage'].touched)"
+              class="text-red-500 text-sm mt-1">
+              Ingrese un campo válido.
+            </div>
+          </div>
+
+          <!-- Back and Submit Buttons -->
+          <div class="flex justify-between">
+            <button type="button" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+              (click)="previousStep()">Atrás</button>
+            <button type="submit"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Enviar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

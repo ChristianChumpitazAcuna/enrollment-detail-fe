@@ -1,0 +1,182 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+<div class="flex h-screen bg-gray-100">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="menu-btn">
+      <i class="ph-bold ph-caret-left"></i>
+    </div>
+    <div class="head">
+      <div class="user-img">
+        <img src="assets/img/public/colegio_logo.png" />
+      </div>
+      <div class="user-details">
+        <p class="title">Artemio Dolorier Abregu</p>
+      </div>
+    </div>
+    <div class="nav">
+      <div class="menu">
+        <p class="title">Main</p>
+        <ul>
+          <li>
+            <a href="">
+              <i class="icon ph-bold ph-house-simple"></i>
+              <span class="text">Cetpro</span>
+            </a>
+          </li>
+          <li class="has-submenu">
+            <a>
+              <i class="icon ph-bold ph-user"></i>
+              <span class="text">Gestión Académico</span>
+              <i class="arrow ph-bold ph-caret-down"></i>
+            </a>
+            <ul class="sub-menu">
+              <li>
+                <a href="">
+                  <span class="text">Periodo Académico</span>
+                </a>
+              </li>
+              <li>
+                <a [routerLink]="['/studentList']">
+                  <span class="text">Estudiante</span>
+                </a>
+              </li>
+              <li>
+                <a href="">
+                  <span class="text">Personal Educativo</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="has-submenu">
+            <a>
+              <i class="icon ph-bold ph-chart-bar"></i>
+              <span class="text">Gestión Asignaciones</span>
+              <i class="arrow ph-bold ph-caret-down"></i>
+            </a>
+            <ul class="sub-menu">
+              <li class="has-submenu">
+                <a href="">
+                  <span class="text">Programas de Estudio</span>
+                  <i class="arrow ph-bold ph-caret-down"></i>
+                </a>
+                <ul class="sub-menu">
+                  <li>
+                    <a [routerLink]="['/studyProgram']">
+                      <span class="text">Listado</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a [routerLink]="['/studyProgramAssign']">
+                      <span class="text">Asignaciones</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="has-submenu">
+                <a [routerLink]="['/studyProgram']">
+                  <span class="text">Unidades Didacticas</span>
+                  <i class="arrow ph-bold ph-caret-down"></i>
+                </a>
+                <ul class="sub-menu">
+                  <li>
+                    <a [routerLink]="['/unitList']">
+                      <span class="text">Listado</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a [routerLink]="['/unitAssign']">
+                      <span class="text">Asignaciones</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="">
+                  <span class="text">Competencias</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
+          <li class="has-submenu">
+            <a>
+              <i class="ph-bold ph-file-text icon w-6 h-6"></i>
+              <span class="text">Gestión de Matricula</span>
+              <i class="arrow ph-bold ph-caret-down"></i>
+            </a>
+            <ul class="sub-menu">
+              <li>
+                <a [routerLink]="['/assign']">
+                  <span class="text">Matricula</span>
+                </a>
+              </li>
+              <li>
+                <a [routerLink]="['/studyProgram']">
+                  <span class="text">Matricula Detalle</span>
+                </a>
+              </li>
+              <li>
+                <a href="">
+                  <span class="text">Pagos</span>
+                </a>
+              </li>
+              <!-- <li>
+                <a href="">
+                  <span class="text">Payouts</span>
+                </a>
+              </li> -->
+            </ul>
+          </li>
+          <li>
+            <a [routerLink]="['/user']" class="flex items-center p-2 hover:bg-gray-700 rounded-md">
+              <i class="bx bx-cloud-upload icon w-6 h-6"></i>
+              <span class="ml-3 text">Solicitantes</span>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['/formulario']" class="flex items-center p-2 hover:bg-gray-700 rounded-md">
+              <i class="ph-bold ph-file-text icon w-6 h-6"></i>
+              <span class="ml-3 text">Preferencia <br> solicitantes</span>
+            </a>
+          </li>
+          <li>
+            <a href="">
+              <i class="icon ph-bold ph-calendar-blank"></i>
+              <span class="text">Schedules</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="menu">
+        <p class="title">Settings</p>
+        <ul>
+          <li>
+            <a href="">
+              <i class="icon ph-bold ph-gear"></i>
+              <span class="text">Settings</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="menu">
+      <p class="title">Account</p>
+      <ul>
+        <li>
+          <a href="">
+            <i class="icon ph-bold ph-info"></i>
+            <span class="text">Help</span>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <i class="icon ph-bold ph-sign-out"></i>
+            <span class="text">Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

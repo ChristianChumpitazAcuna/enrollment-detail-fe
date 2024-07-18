@@ -1,0 +1,88 @@
+<app-sidebar>
+    <div class="container spacing-left spacing-top col-9 ps-5">
+        <h1 class="card-header">PREFERENCIAS DEL USUARIO</h1>
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <div class="mb-3 row">
+                        <div class="col-sm-4 mb-4">
+                            <input class="form-control" type="text" [(ngModel)]="filtro"
+                                placeholder="Buscar por descripción...">
+                        </div>
+                        <div class="col-sm-4 mb-4">
+                            <select name="studyProgramFilter" class="form-control" [(ngModel)]="studyProgramFilter"
+                                (change)="filterResults()">
+                                <option value="">Todos los programas de estudio</option>
+                                <option value="Computación">Computación</option>
+                                <option value="Electricidad">Electricidad</option>
+                                <option value="Peluquería">Peluquería</option>
+                                <option value="Manualidades">Manualidades</option>
+                                <option value="Industria alimentaria">Industria alimentaria</option>
+                                <option value="confección textil">confección textil</option>
+                                <option value="Hotelería y turismo">Hotelería y turismo</option>
+                                <!-- Aquí deberías agregar las opciones de programa de estudio -->
+                                <option *ngFor="let program of studyPrograms" [value]="program.id">{{ program.name }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="button" routerLink="/formulario/agregar" class="btn btn-primary mb-4"> <img
+                                    src="assets/agregar.png" style="width: 25px;" /> Agregar
+                                Formulario</button>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="button" routerLink="/formulario/inactivos" class="btn btn-primary mb-4">Listar
+                                Inactivos</button>
+                        </div>
+                    </div>
+                    <div class="descomprimir">
+                        <button class="csv" (click)="exportToCSV()"> <img src="assets/csv.png" style="width: 25px;" />
+                            Exportar a CSV </button>
+                        <button class="excel" (click)="exportToExcel()"> <img src="assets/excel.png"
+                                style="width: 25px;" /> Exportar a Excel </button>
+                        <button class="pdf" (click)="exportToPDF()"> <img src="assets/pdf.png" style="width: 25px;" />
+                            Exportar a PDF </button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="letra">
+                <div class="card" id="divResultado">
+                    <div class="card-header">Resultado</div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>User ID</th>
+                                    <th>Descripción</th>
+                                    <th>Programa de Estudio</th>
+                                    <th>Estado</th>
+                                    <!--<th>Acciones</th>-->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let form of filteredForms">
+                                    <!--<td>
+                                    <select [(ngModel)]="form.userId" class="form-control">
+                                        <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
+                                    </select>
+                                </td>-->
+                                    <td>{{ userMap[form.userId] || form.userId }}</td>
+                                    <td>{{ form.description }}</td>
+                                    <td>{{ form.studyProgramId }}</td>
+                                    <!--<td>{{ form.status }}</td>-->
+                                    <td>
+                                        <button (click)="updateForm(form)" class="btn btn-warning me-2"><i
+                                                class="bi bi-pencil"></i></button>
+                                        <button (click)="deleteForm(form)" class="btn btn-danger"><i
+                                                class="bi bi-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</app-sidebar>

@@ -1,0 +1,52 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+    <div class="relative w-full max-w-3xl mx-auto bg-white rounded-lg shadow-lg">
+        <div class="flex items-start justify-between p-4 border-b border-gray-200 rounded-t">
+            <h5 class="text-xl font-medium text-gray-800">Datos Detalle de Matrícula</h5>
+            <button type="button" (click)="onCloseForm()"
+                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M10 9l-4.293-4.293a1 1 0 011.414-1.414L10 6.586l4.293-4.293a1 1 0 111.414 1.414L11.414 9l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 9z"
+                        clip-rule="evenodd"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="p-6 space-y-6">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="mb-3">
+                        <label class="block text-sm font-medium text-gray-700">Estudiante</label>
+                        <p-dropdown formControlName="studentId" [options]="students" optionLabel="names"
+                            placeholder="Seleccione Estudiante" [filter]="true" [showClear]="true" optionValue="id"
+                            [ngClass]="{'border-red-500': isFieldInvalid('studentId'), 'border-green-500': isFieldValid('studentId')}" />
+
+                        <div *ngIf="isFieldInvalid('studentId')" class="text-red-500 text-sm mt-1">
+                            <div *ngIf="form.get('studentId')?.errors?.['required']">Seleccione un Estudiante.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="block text-sm font-medium text-gray-700">Unidad Didáctica</label>
+
+                        <p-multiSelect formControlName="didacticUnitId" [options]="didacticUnits" optionLabel="name"
+                            defaultLabel="Seleccione Unidad Didáctica" [showClear]="true" [filter]="true"
+                            [panelStyle]="{minWidth: '15rem'}" [maxSelectedLabels]="1" [showToggleAll]="true"
+                            optionValue="id"
+                            [ngClass]="{'border-red-500': isFieldInvalid('didacticUnitId'), 'border-green-500': isFieldValid('didacticUnitId')}" />
+
+                        <div *ngIf="isFieldInvalid('didacticUnitId')" class="text-red-500 text-sm mt-1">
+                            <div *ngIf="form.get('didacticUnitId')?.errors?.['required']">Seleccione Unidad Didáctica.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="flex justify-center mt-2">
+                    <button [disabled]="form.invalid" type="submit"
+                        class="bg-blue-500 active:hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:bg-blue-400">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
